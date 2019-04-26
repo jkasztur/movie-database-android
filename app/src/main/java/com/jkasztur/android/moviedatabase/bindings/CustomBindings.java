@@ -4,6 +4,9 @@ import android.databinding.BindingAdapter;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.InputFilter;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -17,12 +20,12 @@ public class CustomBindings {
     public static void bindRecyclerViewAdapter(RecyclerView recyclerView, RecyclerView.Adapter<?> adapter) {
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager manager = null;
-        switch(recyclerView.getResources().getConfiguration().orientation) {
+        switch (recyclerView.getResources().getConfiguration().orientation) {
             case ORIENTATION_LANDSCAPE:
-                manager = new LinearLayoutManager(recyclerView.getContext(),LinearLayoutManager.HORIZONTAL, false);
+                manager = new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false);
                 break;
             default:
-                manager = new GridLayoutManager(recyclerView.getContext(),3);
+                manager = new GridLayoutManager(recyclerView.getContext(), 3);
                 break;
         }
         recyclerView.setLayoutManager(manager);
@@ -42,5 +45,17 @@ public class CustomBindings {
             imageView.setTag(R.id.image_url, null);
             imageView.setImageBitmap(null);
         }
+    }
+
+    @BindingAdapter("setFilter")
+    public static void bindEditFilter(EditText editText, InputFilter filter) {
+        if (filter != null) {
+            editText.setFilters(new InputFilter[]{filter});
+        }
+    }
+
+    @BindingAdapter("android:background")
+    public static void setButtonBackgrount(ImageButton button, int resource) {
+        button.setBackground(button.getResources().getDrawable(resource));
     }
 }

@@ -25,38 +25,46 @@
             <TextView
                 android:id="@+id/changedInLabel"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:text="changed in ..."
-                android:textSize="20sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Spinner
-                android:id="@+id/changedDaysSpinner"
-                android:layout_width="90dp"
                 android:layout_height="wrap_content"
-                android:background="@android:drawable/btn_dropdown"
-                android:dropDownWidth="90dp"
-                android:gravity="center"
-                android:spinnerMode="dropdown"
+                android:text="Changed in "
+                android:paddingStart="8dp"
+                android:textSize="20sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/edit_days"
+                />
+
+            <EditText
+                android:id="@+id/edit_days"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:text="@string/default_edit_max"
+                app:setFilter="@{viewModel.getEditFilter()}"
+                android:minEms="2"
                 app:layout_constraintStart_toEndOf="@id/changedInLabel"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <TextView
                 android:id="@+id/daysLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="days"
+                android:text="days (min 0, max 14)"
                 android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@id/changedDaysSpinner"
+                app:layout_constraintStart_toEndOf="@id/edit_days"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
                 android:id="@+id/refresh_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/round_refresh_black_24dp"
+                android:background="@{viewModel.editButtonRes}"
+                android:onClick="@{() -> viewModel.onRefreshClicked()}"
+                android:backgroundTint="@color/colorPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/daysLabel"
                 app:layout_constraintTop_toTopOf="parent" />
         </android.support.constraint.ConstraintLayout>
 

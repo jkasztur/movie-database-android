@@ -6,10 +6,8 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.Spinner;
+import android.widget.EditText;
 
 import com.jkasztur.android.moviedatabase.databinding.ActivityMoviesBinding;
 import com.jkasztur.android.moviedatabase.model.Movie;
@@ -19,22 +17,13 @@ import java.util.List;
 
 public class MoviesActivity extends AppCompatActivity {
     private MoviesViewModel viewModel;
-
-    private Spinner daysSpinner;
+    private EditText editLastDays;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
-
-        daysSpinner = findViewById(R.id.changedDaysSpinner);
-        // todo: use array from resources
-        final Integer[] items = new Integer[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
-        ArrayAdapter<Integer> spinnerAdapter =
-                new ArrayAdapter<>(this, R.layout.support_simple_spinner_dropdown_item, items);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        daysSpinner.setAdapter(spinnerAdapter);
-
+        editLastDays = findViewById(R.id.edit_days);
         setupBindings();
     }
 
@@ -45,20 +34,31 @@ public class MoviesActivity extends AppCompatActivity {
             viewModel.init();
         }
         binding.setViewModel(viewModel);
-        if (!viewModel.isDataLoaded()) {
-            setupList();
-        }
+        setupRefreshClick();
+    }
+
+    private void setupRefreshClick() {
+        viewModel.refreshClicked.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if(aBoolean != null && aBoolean) {
+                    setupList();
+                }
+            }
+        });
     }
 
     private void setupList() {
         viewModel.loading.set(View.VISIBLE);
-        viewModel.fetchList();
+        viewModel.fetchList(Integer.parseInt(editLastDays.getText().toString()));
         viewModel.getMovies().observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(@Nullable List<Movie> movies) {
                 viewModel.loading.set(View.GONE);
                 viewModel.setMoviesInAdapter(movies);
                 viewModel.setDataLoaded(true);
+                viewModel.refreshClicked.setValue(false);
+                viewModel.getEditButtonRes().set(R.drawable.baseline_refresh_black_24dp);
             }
         });
     }

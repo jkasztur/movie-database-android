@@ -6,7 +6,9 @@ import android.databinding.ObservableInt;
 import android.util.Log;
 import android.view.View;
 
+import com.jkasztur.android.moviedatabase.R;
 import com.jkasztur.android.moviedatabase.adapter.MoviesRvAdapter;
+import com.jkasztur.android.moviedatabase.adapter.RangeNumFilter;
 import com.jkasztur.android.moviedatabase.model.Movie;
 import com.jkasztur.android.moviedatabase.model.Movies;
 
@@ -22,19 +24,32 @@ public class MoviesViewModel extends ViewModel {
 
     @Getter
     private MoviesRvAdapter adapter;
+    @Getter
+    private RangeNumFilter editFilter;
     private Movies movies;
     public ObservableInt loading;
+    public MutableLiveData<Boolean> refreshClicked;
     @Getter @Setter
     private boolean dataLoaded = false;
+    @Getter @Setter
+    private ObservableInt editButtonRes;
+
 
     public void init() {
         movies = new Movies();
         adapter = new MoviesRvAdapter(this);
+        editFilter = new RangeNumFilter(0,14);
         loading = new ObservableInt(View.GONE);
+        refreshClicked = new MutableLiveData<>();
+        editButtonRes = new ObservableInt(R.drawable.baseline_arrow_forward_black_24dp);
     }
 
-    public void fetchList() {
-        movies.fetchList();
+    public void onRefreshClicked() {
+        refreshClicked.setValue(true);
+    }
+
+    public void fetchList(int lastDays) {
+        movies.fetchList(lastDays);
     }
 
     public MutableLiveData<List<Movie>> getMovies() {

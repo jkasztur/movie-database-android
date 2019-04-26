@@ -11,9 +11,12 @@ import retrofit2.http.Query;
 public interface TheMovieDbApi {
 
     @GET("movie/changes")
-    Call<Movies> getMovies(@Query("api_key") String apiKey);
+    Call<Movies> getMovies(@Query("api_key") String apiKey,
+                           @Query("start_date") String startDate,
+                           @Query("end_date") String endDate);
 
 
     @GET("movie/{id}")
-    Call<Movie> getMovieDetails(@Path ("id") String movieId, @Query("api_key") String apiKey);
+    Call<Movie> getMovieDetails(@Path("id") String movieId,
+                                @Query("api_key") String apiKey);
 }
