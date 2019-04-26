@@ -13,6 +13,7 @@ import com.jkasztur.android.moviedatabase.model.Movies;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.Setter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -23,6 +24,8 @@ public class MoviesViewModel extends ViewModel {
     private MoviesRvAdapter adapter;
     private Movies movies;
     public ObservableInt loading;
+    @Getter @Setter
+    private boolean dataLoaded = false;
 
     public void init() {
         movies = new Movies();

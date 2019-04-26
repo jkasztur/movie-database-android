@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -34,18 +35,19 @@ public class MoviesActivity extends AppCompatActivity {
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         daysSpinner.setAdapter(spinnerAdapter);
 
-        setupBindings(savedInstanceState);
-
+        setupBindings();
     }
 
-    private void setupBindings(Bundle savedInstanceState) {
+    private void setupBindings() {
         ActivityMoviesBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_movies);
         viewModel = ViewModelProviders.of(this).get(MoviesViewModel.class);
-        if (savedInstanceState == null) {
+        if (!viewModel.isDataLoaded()) {
             viewModel.init();
         }
         binding.setViewModel(viewModel);
-        setupList();
+        if (!viewModel.isDataLoaded()) {
+            setupList();
+        }
     }
 
     private void setupList() {
@@ -56,6 +58,7 @@ public class MoviesActivity extends AppCompatActivity {
             public void onChanged(@Nullable List<Movie> movies) {
                 viewModel.loading.set(View.GONE);
                 viewModel.setMoviesInAdapter(movies);
+                viewModel.setDataLoaded(true);
             }
         });
     }
