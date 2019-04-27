@@ -29,6 +29,7 @@ public class MoviesViewModel extends ViewModel {
     private Movies movies;
     public ObservableInt loading;
     public MutableLiveData<Boolean> refreshClicked;
+    public MutableLiveData<Movie> movieClicked;
     @Getter @Setter
     private boolean dataLoaded = false;
     @Getter @Setter
@@ -42,10 +43,7 @@ public class MoviesViewModel extends ViewModel {
         loading = new ObservableInt(View.GONE);
         refreshClicked = new MutableLiveData<>();
         editButtonRes = new ObservableInt(R.drawable.baseline_arrow_forward_black_24dp);
-    }
-
-    public void onRefreshClicked() {
-        refreshClicked.setValue(true);
+        movieClicked = new MutableLiveData<>();
     }
 
     public void fetchList(int lastDays) {
@@ -70,16 +68,21 @@ public class MoviesViewModel extends ViewModel {
         return null;
     }
 
+    public void onRefreshClicked() {
+        refreshClicked.setValue(true);
+    }
+
     public void onClickMoreItem() {
+        Log.i("CLICK", "more button clicked");
         int beforeAdd = movies.getMovies().getValue().size();
         movies.addMoreToPresented();
         int afterAdd = movies.getMovies().getValue().size();
         adapter.notifyItemRangeInserted(beforeAdd, afterAdd);
-        Log.i("CLICK", "more button clicked");
     }
 
     public void onClickMovieItem(int position) {
         Log.i("CLICK", "movie clicked");
+        movieClicked.setValue(getMovieAt(position));
     }
 
     public void fetchMovieDetailsAt(final Integer index) {
@@ -91,9 +94,7 @@ public class MoviesViewModel extends ViewModel {
                 public void onResponse(Call<Movie> call, Response<Movie> response) {
                     if (response.code() == 200) {
                         Movie body = response.body();
-                        movie.setTitle(body.getTitle());
-                        movie.setPosterPath(body.getPosterPath());
-                        movie.setDetailsSet(true);
+                        movie.setDetails(body);
                         adapter.notifyItemChanged(index);
                     }
                 }

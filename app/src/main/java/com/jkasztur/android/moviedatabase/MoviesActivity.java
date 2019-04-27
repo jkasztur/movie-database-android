@@ -2,6 +2,7 @@ package com.jkasztur.android.moviedatabase;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.jkasztur.android.moviedatabase.databinding.ActivityMoviesBinding;
 import com.jkasztur.android.moviedatabase.model.Movie;
@@ -17,6 +19,8 @@ import com.jkasztur.android.moviedatabase.viewmodel.MoviesViewModel;
 import java.util.List;
 
 public class MoviesActivity extends AppCompatActivity {
+    public static final String APP_MOVIE_ID = "APP_MOVIE_ID";
+
     private MoviesViewModel viewModel;
     private EditText editLastDays;
 
@@ -35,10 +39,10 @@ public class MoviesActivity extends AppCompatActivity {
             viewModel.init();
         }
         binding.setViewModel(viewModel);
-        setupRefreshClick();
+        setupClicks();
     }
 
-    private void setupRefreshClick() {
+    private void setupClicks() {
         viewModel.refreshClicked.observe(this, new Observer<Boolean>() {
             @Override
             public void onChanged(@Nullable Boolean aBoolean) {
@@ -47,6 +51,26 @@ public class MoviesActivity extends AppCompatActivity {
                 }
             }
         });
+
+        viewModel.movieClicked.observe(this, new Observer<Movie>() {
+            @Override
+            public void onChanged(@Nullable Movie movie) {
+                if(movie != null) {
+                    makeMovieToast(movie);
+                    startDetailsActivity(movie);
+                }
+            }
+        });
+    }
+
+    private void makeMovieToast(Movie movie) {
+        Toast.makeText(this, "You selected: " + movie.getTitle(), Toast.LENGTH_SHORT).show();
+    }
+
+    private void startDetailsActivity(Movie movie) {
+        Intent detailsAct = new Intent(this, DetailsActivity.class);
+        detailsAct.putExtra(APP_MOVIE_ID, movie);
+        startActivity(detailsAct);
     }
 
     private void setupList() {
@@ -61,7 +85,6 @@ public class MoviesActivity extends AppCompatActivity {
                 viewModel.loading.set(View.GONE);
                 viewModel.setMoviesInAdapter(movies);
                 viewModel.setDataLoaded(true);
-                viewModel.refreshClicked.setValue(false);
                 viewModel.getEditButtonRes().set(R.drawable.baseline_refresh_black_24dp);
             }
         });

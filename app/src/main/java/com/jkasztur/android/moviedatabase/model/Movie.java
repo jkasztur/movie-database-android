@@ -1,18 +1,23 @@
 package com.jkasztur.android.moviedatabase.model;
 
 import android.databinding.BaseObservable;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.jkasztur.android.moviedatabase.api.TheMovieDbClient;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import retrofit2.Callback;
 
 @Setter
 @Getter
-public class Movie extends BaseObservable {
+@NoArgsConstructor
+public class Movie extends BaseObservable implements Parcelable {
     private final String SMALL_POSTER_BASE = "http://image.tmdb.org/t/p/w185/";
     private final String BIG_POSTER_BASE = "http://image.tmdb.org/t/p/w342/";
 
@@ -25,17 +30,41 @@ public class Movie extends BaseObservable {
     private String releaseDate;
     private String posterPath;
 
-    private boolean detailsSet = false;
+    private boolean detailsSet;
+
+    protected Movie(Parcel in) {
+        id = in.readString();
+        title = in.readString();
+        language = in.readString();
+        genres = new ArrayList<>();
+        in.readList(genres, String.class.getClassLoader());
+        overview = in.readString();
+        releaseDate = in.readString();
+        posterPath = in.readString();
+        detailsSet = in.readByte() != 0;
+    }
+
+    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
+        @Override
+        public Movie createFromParcel(Parcel in) {
+            return new Movie(in);
+        }
+
+        @Override
+        public Movie[] newArray(int size) {
+            return new Movie[size];
+        }
+    };
 
     public String getSmallPosterUrl() {
-        if(posterPath != null) {
+        if (posterPath != null) {
             return SMALL_POSTER_BASE + posterPath;
         }
         return null;
     }
 
     public String getBigPosterUrl() {
-        if(posterPath != null) {
+        if (posterPath != null) {
             return BIG_POSTER_BASE + posterPath;
         }
         return null;
@@ -43,5 +72,34 @@ public class Movie extends BaseObservable {
 
     public void fetchDetails(Callback<Movie> callback) {
         TheMovieDbClient.getApi().getMovieDetails(id, "7b6d38875404b0b7a8c7b8dbbe72e16c").enqueue(callback);
+    }
+
+    public void setDetails(Movie other) {
+        setId(other.getId());
+        setTitle(other.getTitle());
+        setPosterPath(other.getPosterPath());
+        setGenres(other.getGenres());
+        setLanguage(other.getLanguage());
+        setOverview(other.getOverview());
+        setReleaseDate(other.getReleaseDate());
+
+        setDetailsSet(true);
+    }
+
+    @Override
+    public int describeContents() {
+        return hashCode();
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(id);
+        parcel.writeString(title);
+        parcel.writeString(language);
+        parcel.writeList(genres);
+        parcel.writeString(overview);
+        parcel.writeString(releaseDate);
+        parcel.writeString(posterPath);
+        parcel.writeByte((byte) (detailsSet ? 1 : 0));
     }
 }

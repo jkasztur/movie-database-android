@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.jkasztur.android.moviedatabase.viewmodel.DetailsViewModel" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/detail_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/list_item_image_border"
+                app:imageUrl="@{viewModel.movie.getBigPosterUrl()}"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                style="@style/detailTitle"
+                android:id="@+id/detail_title"
+                android:text="@{viewModel.movie.title}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_image" />
+
+            <!-- Genres -->
+            <TextView
+                android:id="@+id/detail_genres_label"
+                style="@style/detailLabel"
+                android:text="Genres: "
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_title" />
+
+            <TextView
+                android:id="@+id/detail_genres"
+                style="@style/detailValue"
+                android:text="@{viewModel.movie.genres}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_genres_label" />
+
+            <!-- Language -->
+            <TextView
+                android:id="@+id/detail_lang_label"
+                style="@style/detailLabel"
+                android:text="Language: "
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_genres" />
+
+            <TextView
+                android:id="@+id/detail_lang"
+                style="@style/detailValue"
+                android:text="@{viewModel.movie.language}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_lang_label" />
+
+            <!-- Release date -->
+            <TextView
+                android:id="@+id/detail_release_label"
+                style="@style/detailLabel"
+                android:text="Release date: "
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_lang" />
+
+            <TextView
+                android:id="@+id/detail_release"
+                style="@style/detailValue"
+                android:text="@{viewModel.movie.releaseDate}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_release_label" />
+
+            <!-- Overview -->
+            <TextView
+                android:id="@+id/detail_overview_label"
+                style="@style/detailLabel"
+                android:text="Overview: "
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_release" />
+
+            <TextView
+                android:id="@+id/detail_overview"
+                style="@style/detailValue"
+                android:text="@{viewModel.movie.overview}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_overview_label" />
+
+        </android.support.constraint.ConstraintLayout>
+    </ScrollView>
+
+</layout>

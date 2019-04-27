@@ -26,7 +26,7 @@
                 android:id="@+id/changedInLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Changed in "
+                android:text="@string/changed_in"
                 android:paddingStart="8dp"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -50,7 +50,7 @@
                 android:id="@+id/daysLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="days (min 1, max 14)"
+                android:text="@string/days_min_max"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@id/edit_days"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -92,7 +92,6 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="sdsd"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/movies_rv" />

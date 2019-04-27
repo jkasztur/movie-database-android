@@ -5,12 +5,18 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputFilter;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jkasztur.android.moviedatabase.R;
+
+import org.w3c.dom.Text;
+
+import java.util.List;
 
 import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 
@@ -55,7 +61,17 @@ public class CustomBindings {
     }
 
     @BindingAdapter("android:background")
-    public static void setButtonBackgrount(ImageButton button, int resource) {
+    public static void setButtonBackground(ImageButton button, int resource) {
         button.setBackground(button.getResources().getDrawable(resource));
+    }
+
+    @BindingAdapter("android:text")
+    public static void bindListToText(TextView view, List<String> list) {
+        if (list != null) {
+            String str = list.toString();
+            str = str.replace("[","");
+            str = str.replace("]","");
+            view.setText(str);
+        }
     }
 }
