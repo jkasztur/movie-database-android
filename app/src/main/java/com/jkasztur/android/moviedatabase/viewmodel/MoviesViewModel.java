@@ -38,7 +38,7 @@ public class MoviesViewModel extends ViewModel {
     public void init() {
         movies = new Movies();
         adapter = new MoviesRvAdapter(this);
-        editFilter = new RangeNumFilter(0,14);
+        editFilter = new RangeNumFilter(1,14);
         loading = new ObservableInt(View.GONE);
         refreshClicked = new MutableLiveData<>();
         editButtonRes = new ObservableInt(R.drawable.baseline_arrow_forward_black_24dp);

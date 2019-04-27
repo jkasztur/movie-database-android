@@ -54,18 +54,21 @@ public class Movies extends BaseObservable {
         String end = dateFormat.format(cal.getTime());
         cal.add(Calendar.DAY_OF_YEAR, -inLastDays);
         String start = dateFormat.format(cal.getTime());
+        Log.i("Movies", "start: " + start);
+        Log.i("Movies", "end: " + end);
 
         Callback<Movies> callback = new Callback<Movies>() {
             @Override
             public void onResponse(Call<Movies> call, Response<Movies> response) {
                 Movies body = response.body();
+                Log.i("Movies", "listed movies(non adult): " + body.movieList.size());
                 movieList = body.movieList;
                 movies.setValue(body.movieList.subList(0, BLOCK_COUNT));
             }
 
             @Override
             public void onFailure(Call<Movies> call, Throwable t) {
-                Log.e("Test", t.getMessage(), t);
+                Log.e("Movies", t.getMessage(), t);
             }
         };
         TheMovieDbClient.getApi().getMovies("7b6d38875404b0b7a8c7b8dbbe72e16c",

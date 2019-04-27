@@ -6,6 +6,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
@@ -50,7 +51,10 @@ public class MoviesActivity extends AppCompatActivity {
 
     private void setupList() {
         viewModel.loading.set(View.VISIBLE);
-        viewModel.fetchList(Integer.parseInt(editLastDays.getText().toString()));
+        EditText editText = findViewById(R.id.edit_days);
+        int days = Integer.parseInt(editText.getText().toString());
+        Log.i("Activity", "days taken from edit: " + days);
+        viewModel.fetchList(days);
         viewModel.getMovies().observe(this, new Observer<List<Movie>>() {
             @Override
             public void onChanged(@Nullable List<Movie> movies) {

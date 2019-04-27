@@ -50,7 +50,7 @@
                 android:id="@+id/daysLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="days (min 0, max 14)"
+                android:text="days (min 1, max 14)"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@id/edit_days"
                 app:layout_constraintBottom_toBottomOf="parent"
