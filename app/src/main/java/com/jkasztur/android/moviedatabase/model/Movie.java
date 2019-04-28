@@ -7,6 +7,7 @@ import android.os.Parcelable;
 import com.jkasztur.android.moviedatabase.api.TheMovieDbClient;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import lombok.Getter;
@@ -79,9 +80,21 @@ public class Movie extends BaseObservable implements Parcelable {
         setTitle(other.getTitle());
         setPosterPath(other.getPosterPath());
         setGenres(other.getGenres());
+        if(genres == null || genres.isEmpty()) {
+            setGenres(Collections.singletonList("No genres have been added"));
+        }
         setLanguage(other.getLanguage());
+        if(language == null || language.isEmpty()) {
+            setLanguage("No language has been added");
+        }
         setOverview(other.getOverview());
+        if(overview == null || overview.isEmpty()) {
+            setOverview("No overview has been added");
+        }
         setReleaseDate(other.getReleaseDate());
+        if(releaseDate == null || releaseDate.isEmpty()) {
+            setReleaseDate("No release date has been added");
+        }
 
         setDetailsSet(true);
     }

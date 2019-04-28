@@ -28,7 +28,7 @@ public class JsonDetailsDeserializer implements JsonDeserializer<Movie> {
                 switch(entry.getKey()) {
                     case "id":
                         movie.setId(cleanStrElement(entry.getValue()));
-                        Log.d("DetailsDeserializer", "id: " + movie.getTitle());
+                        Log.d("DetailsDeserializer", "id: " + movie.getId());
                         break;
                     case "title":
                         movie.setTitle(cleanStrElement(entry.getValue()));

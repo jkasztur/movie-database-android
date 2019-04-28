@@ -42,7 +42,7 @@ public class MoviesViewModel extends ViewModel {
         editFilter = new RangeNumFilter(1,14);
         loading = new ObservableInt(View.GONE);
         refreshClicked = new MutableLiveData<>();
-        editButtonRes = new ObservableInt(R.drawable.baseline_arrow_forward_black_24dp);
+        editButtonRes = new ObservableInt(R.drawable.baseline_arrow_forward);
         movieClicked = new MutableLiveData<>();
     }
 

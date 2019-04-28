@@ -27,8 +27,8 @@
 
 
             <TextView
-                style="@style/detailTitle"
                 android:id="@+id/detail_title"
+                style="@style/detailTitle"
                 android:text="@{viewModel.movie.title}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

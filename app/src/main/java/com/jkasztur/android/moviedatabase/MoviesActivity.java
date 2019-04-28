@@ -63,6 +63,7 @@ public class MoviesActivity extends AppCompatActivity {
         });
     }
 
+    // Maybe unnecessary, used for testing at beginning
     private void makeMovieToast(Movie movie) {
         Toast.makeText(this, "You selected: " + movie.getTitle(), Toast.LENGTH_SHORT).show();
     }
@@ -77,7 +78,7 @@ public class MoviesActivity extends AppCompatActivity {
         viewModel.loading.set(View.VISIBLE);
         EditText editText = findViewById(R.id.edit_days);
         int days = Integer.parseInt(editText.getText().toString());
-        Log.i("Activity", "days taken from edit: " + days);
+        Log.i("MoviesActivity", "days taken from edit: " + days);
         viewModel.fetchList(days);
         viewModel.getMovies().observe(this, new Observer<List<Movie>>() {
             @Override
@@ -85,7 +86,7 @@ public class MoviesActivity extends AppCompatActivity {
                 viewModel.loading.set(View.GONE);
                 viewModel.setMoviesInAdapter(movies);
                 viewModel.setDataLoaded(true);
-                viewModel.getEditButtonRes().set(R.drawable.baseline_refresh_black_24dp);
+                viewModel.getEditButtonRes().set(R.drawable.baseline_refresh);
             }
         });
     }

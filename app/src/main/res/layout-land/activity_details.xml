@@ -48,7 +48,7 @@
                 <TextView
                     android:id="@+id/detail_genres_label"
                     style="@style/detailLabel"
-                    android:text="Genres: "
+                    android:text="@string/genres_label"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/detail_title" />
 
@@ -63,7 +63,7 @@
                 <TextView
                     android:id="@+id/detail_lang_label"
                     style="@style/detailLabel"
-                    android:text="Language: "
+                    android:text="@string/language_label"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/detail_genres" />
 
@@ -78,7 +78,7 @@
                 <TextView
                     android:id="@+id/detail_release_label"
                     style="@style/detailLabel"
-                    android:text="Release date: "
+                    android:text="@string/release_date_label"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/detail_lang" />
 
@@ -93,7 +93,7 @@
                 <TextView
                     android:id="@+id/detail_overview_label"
                     style="@style/detailLabel"
-                    android:text="Overview: "
+                    android:text="@string/overview_label"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/detail_release" />
 

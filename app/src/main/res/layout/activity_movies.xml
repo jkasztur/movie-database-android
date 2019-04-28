@@ -26,25 +26,24 @@
                 android:id="@+id/changedInLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/changed_in"
                 android:paddingStart="8dp"
+                android:text="@string/changed_in"
                 android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/edit_days"
-                />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/edit_days"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="numberDecimal"
-                android:text="@string/default_edit_max"
-                app:setFilter="@{viewModel.getEditFilter()}"
                 android:minEms="2"
-                app:layout_constraintStart_toEndOf="@id/changedInLabel"
+                android:text="@string/default_edit_max"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintStart_toEndOf="@id/changedInLabel"
+                app:layout_constraintTop_toTopOf="parent"
+                app:setFilter="@{viewModel.getEditFilter()}" />
 
             <TextView
                 android:id="@+id/daysLabel"
@@ -52,17 +51,17 @@
                 android:layout_height="wrap_content"
                 android:text="@string/days_min_max"
                 android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@id/edit_days"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/edit_days"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
                 android:id="@+id/refresh_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:background="@{viewModel.editButtonRes}"
-                android:onClick="@{() -> viewModel.onRefreshClicked()}"
                 android:backgroundTint="@color/colorPrimary"
+                android:onClick="@{() -> viewModel.onRefreshClicked()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/daysLabel"
                 app:layout_constraintTop_toTopOf="parent" />
