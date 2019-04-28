@@ -5,7 +5,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputFilter;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,8 +12,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.jkasztur.android.moviedatabase.R;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -24,14 +21,22 @@ import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
 public class CustomBindings {
     @BindingAdapter("setAdapter")
     public static void bindRecyclerViewAdapter(RecyclerView recyclerView, RecyclerView.Adapter<?> adapter) {
+        int spanCount = 3;
+
         recyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager manager = null;
+        RecyclerView.LayoutManager manager;
         switch (recyclerView.getResources().getConfiguration().orientation) {
             case ORIENTATION_LANDSCAPE:
                 manager = new LinearLayoutManager(recyclerView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+                if(recyclerView.getResources().getBoolean(R.bool.isTablet)) {
+                    manager = new GridLayoutManager(recyclerView.getContext(), 7);
+                }
                 break;
             default:
-                manager = new GridLayoutManager(recyclerView.getContext(), 3);
+                if(recyclerView.getResources().getBoolean(R.bool.isTablet)) {
+                    spanCount = 5;
+                }
+                manager = new GridLayoutManager(recyclerView.getContext(), spanCount);
                 break;
         }
         recyclerView.setLayoutManager(manager);
